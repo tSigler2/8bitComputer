@@ -16,6 +16,9 @@ Programs for the computer are loaded into ROM, which also has a 16-bit address w
 ### Assembly Code
 - If you want to write assembly code for this minicomputer, there are currently 12 recognized instructions divided by how many arguments they take. Function titles are preceeded by the word fcn.
 
+![The Whole Computer](images/whole_computer.png)
+![Instruction Decoder](images/instruction_decoder.png)
+
 0 Arguments:
 - hlt: Halts all execution on the minicomputer.
 - rst: Resets all register contents on the minicomputer, including status registers
