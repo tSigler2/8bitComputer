@@ -1,19 +1,19 @@
-### An 8-Bit Minicomputer
+# An 8-Bit Minicomputer
 
 This repository houses my 8-bit minicomputer design. It also contains a custom assembly language and assembler written in C.
 
 ## Computer Architecture
 
-# Registers
+### Registers
 The computer contains 4 general purpose registers (A, B, C, D), 2 8-bit memory pointing registers (H, L), a 3-bit flags register, a 4-bit color register, an instruction pointer register, and status registers for handling immediate values. The h and l registers are for low and high values of the memory pointer respectively. These h and l registers are used for indirect memory addressing.
 
-# Memory
+### Memory
 The computer contains a 16-bit address space for variables. This space is currently unorganized, but can be organized however the programmer wishes.
 
-# Programs
+### Programs
 Programs for the computer are loaded into ROM, which also has a 16-bit address width. This ROM is separate from the RAM where values can be stored during execution.
 
-## Assembly Code
+### Assembly Code
 - If you want to write assembly code for this minicomputer, there are currently 12 recognized instructions divided by how many arguments they take. Function titles are preceeded by the word fcn.
 
 0 Arguments:
@@ -37,7 +37,7 @@ Programs for the computer are loaded into ROM, which also has a 16-bit address w
 - and: Performs an and operation between two bytes. Arguments provided are the two source registers and the destination register.
 - oro: Performs an or operation between two bytes. Arguments provided are the two source registers and the destination register.
 
-# Quirks of the Computer
+### Quirks of the Computer
 - The only destination registers available are registers A and B
 - Not can not be performed on the contents of register D
 - When jumping, the memory address in H and L is used to provide the address to jump to
