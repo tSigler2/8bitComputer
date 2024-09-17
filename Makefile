@@ -1,21 +1,19 @@
-.PHONY: asm, assemble
+.PHONY: clean asm assemble
 
 CC := gcc
-BIN ?= ./assembler
+BIN ?= assembler
+ASM_TARGET ?= a.asm
 
 ASM_SRC := $(wildcard asm/*.c)
-ASM_OBJ := $(BIN)/asm.o
+ASM_OBJ := $(BIN)/asm
 
 
-clean: ./bin
-	rm -r ./bin
+clean_asm: $(BIN)
 	rm -r $(BIN)
 
-asm:
-	@if [[! -d $(BIN)]]; then \
-		mkdir -p $(BIN) \
-	fi
+asm: $(ASM_SRC)
+	mkdir -p $(BIN)
 	$(CC) $(ASM_SRC) -o $(ASM_OBJ)
 
 assemble: $(ASM_OBJ)
-	./$(ASM_OBJ) $(TARGET)
+	./$(ASM_OBJ) $(ASM_TARGET)

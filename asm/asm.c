@@ -5,6 +5,10 @@ char* inFile = NULL;
 int ramPointer = 0;
 
 void deallocToken(struct Token* tok){
+    if(tok->childNum == 0){
+        free(tok);
+        return;
+    }
     for(int i = 0; i < tok->childNum; i++){
         deallocToken(tok->children[i]);
     }
@@ -66,6 +70,11 @@ int main(int argc, char** argv){
     if(binFile == NULL){
         perror("Failed to generate output file\n");
         exit(1);
+    }
+
+    if(reset){
+        u8 r = (u8) 0x10;
+        fwrite(&r, sizeof(u8), 1, binFile);
     }
 
     generateBinary(&program, binFile);

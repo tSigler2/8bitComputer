@@ -17,7 +17,7 @@
     __a < __b ? __a : __b\
 })
 
-void deallocToken(struct Token* tok, int i, int j);
+void deallocToken(struct Token* tok);
 
 #define RAM_LIMIT 65536
 #define ROM_LIMIT 65536

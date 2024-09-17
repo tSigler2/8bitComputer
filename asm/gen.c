@@ -72,11 +72,12 @@ u8 checkCommand(struct Token* token){
     }
 }
 
-int findFuncAddress(char** funcAddressList, char* func){
-    for(int i = 0; i < ARRLEN(funcAddressList); i++){
-        if(strcmp(func, funcAddressList[i])) return i;
+int findFuncAddress(char** funcAddressList, char* func, int childAmt){
+    if(func[strlen(func)-1] == '\n' || func[strlen(func)-1] == ' ') func[strlen(func)-1] = '\0';
+    for(int i = 0; i < childAmt; i++){
+        if(strcmp(func, funcAddressList[i]) == 0) return i;
     }
-    printf("Function Finding Error");
+    printf("Function Finding Error\n");
     exit(1);
 }
 
@@ -85,18 +86,18 @@ void generateBinary(struct Token* program, FILE* outFile){
     funcTracker = malloc(sizeof(u8)*program->childNum*2);
     funcTracker[0] = 0x00; funcTracker[1] = 0x00;
 
-    char** funcAddresses = malloc(sizeof(char*)*program->childNum);
+    char** funcAddresses = malloc(sizeof(char*)*(program->childNum+1));
     char** funcNote = malloc(sizeof(char*)*1024);
 
     u16 funcIndex[1024] = {0x0000};
     int funcIndexP = 0;
 
     u16 byteCounter = 0x0000;
-    u8 command, jumpAdd;
+    u8 command, jumpAdd, lastCommand;
 
     for(int i = 0; i < program->childNum; i++){
         funcAddresses[i] = malloc(sizeof(char)*(strlen(program->children[i]->srcData)+1));
-        funcAddresses[i] = strcpy(funcAddresses[i], program->children[i]->srcData);
+        strcpy(funcAddresses[i], program->children[i]->srcData);
     }
     
     for(int i = 0; i < program->childNum; i++){
@@ -112,6 +113,7 @@ void generateBinary(struct Token* program, FILE* outFile){
 
         for(int j = 0; j < program->children[i]->childNum; j++){
             command = checkCommand(program->children[i]->children[j]);
+            if(command == 0x00 && lastCommand == 0x00) continue;
             if(command == JUMP){
                 jumpAdd = (u8)(LOADI+L);
                 fwrite(&jumpAdd, sizeof(u8), 1, outFile);
@@ -122,30 +124,35 @@ void generateBinary(struct Token* program, FILE* outFile){
                 jumpAdd = (u8)0x00;
                 fwrite(&jumpAdd, sizeof(u8), 1, outFile);
                 funcIndex[funcIndexP] = byteCounter;
-                funcNote[funcIndexP] = program->children[i]->children[j]->srcData;
+                funcNote[funcIndexP] = malloc(sizeof(char)*(strlen(program->children[i]->children[j]->srcData)+1));
+                strcpy(funcNote[funcIndexP], program->children[i]->children[j]->srcData);
                 funcIndexP++;
                 byteCounter += 5;
             }
             
             fwrite(&command, sizeof(command), 1, outFile);
             byteCounter++;
+            lastCommand = command;
 
             if(loadImm){
                 fwrite(&program->children[i]->children[j]->children[0]->data, sizeof(u8), 1, outFile);
                 loadImm = false;
+                lastCommand = 0x01;
                 byteCounter++;
             }
         }
     }
+
     int funcFind;
     u8 high, low;
     for(int i = 0; i < funcIndexP; i++){
-        fseek(outFile, (long)funcIndex[i], 0);
-        funcFind = findFuncAddress(funcAddresses, funcNote[i]);
+        fseek(outFile, (long)funcIndex[i]+1, 0);
+        funcFind = findFuncAddress(funcAddresses, funcNote[i], program->childNum);
         low = funcTracker[2*funcFind];
         high = funcTracker[2*funcFind+1];
         fwrite(&low, sizeof(u8), 1, outFile+1);
-        fwrite(&high, sizeof(u8), 1, outFile+3);
+        fseek(outFile, (long)funcIndex[i]+3, 0);
+        fwrite(&high, sizeof(u8), 1, outFile);
     }
     free(funcTracker);
 }

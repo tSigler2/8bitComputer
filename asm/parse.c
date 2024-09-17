@@ -10,6 +10,10 @@ u8 getRegister(char c){
             return (u8) C;
         case 'd':
             return (u8) D;
+        case 'l':
+            return (u8) L;
+        case 'h':
+            return (u8) H;
         default:
             printf("Register Argument not Found");
             exit(1);
@@ -170,7 +174,6 @@ void parse(FILE* asmFile, struct Token* program){
     tk_count = 0, fnc_count = -1;
     enum Op op;
     char c;
-    char* k;
     rewind(asmFile);
     lineCount = 0;
 
@@ -221,7 +224,8 @@ void parse(FILE* asmFile, struct Token* program){
             program->children[fnc_count]->children[tk_count]->number = count;
             program->children[fnc_count]->children[tk_count]->src = lineCount;
             if(!strcmp(tok, "jmp")){
-                program->children[fnc_count]->children[tk_count]->srcData = strtok(NULL, " \t,:");
+                program->children[fnc_count]->children[tk_count]->srcData = malloc(sizeof(char)*1024);
+                strcpy(program->children[fnc_count]->children[tk_count]->srcData, strtok(NULL, " \t,:"));
                 program->children[fnc_count]->children[tk_count]->childNum = 0;
                 free(program->children[fnc_count]->children[tk_count]->children);
             }

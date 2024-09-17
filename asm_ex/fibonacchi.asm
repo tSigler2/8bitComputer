@@ -8,6 +8,7 @@ fnc _start:
     mov l, 0x0d
     mov c, 5
     jmp _fib
+fnc _restart:
     hlt
 
 fnc _fib:
@@ -17,7 +18,7 @@ fnc _fib:
     mov b, 0
     add b, c, b
     mov l, 0x0b
-    jmp _start
+    jmp _restart
     mov b, 1
     mov d, 1
     not b, b
@@ -29,4 +30,4 @@ fnc _fib:
     add b, c, b
     mov l, 0x0d
     lda b
-    jmp _start
+    jmp _restart
