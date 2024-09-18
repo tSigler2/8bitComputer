@@ -159,7 +159,7 @@ void generateBinary(struct Token* program, FILE* outFile){
     free(funcAddresses);
 
     for(int i = 0; i < funcIndexP; i++) free(funcNote[i]);
-    free(funcNote[i]);
+    free(funcNote);
 
     free(funcTracker);
 }

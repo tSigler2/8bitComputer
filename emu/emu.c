@@ -1,5 +1,6 @@
 #include "emu.h"
 #include "cpu.h"
+#include "decoder.h"
 
 int main(int argc, char** argv){
     if(argc < 2){
@@ -28,7 +29,7 @@ int main(int argc, char** argv){
     if(!inPerSec) inPerSec = 100;
     
     CPU cpu = {
-        .immMode = false;
+        .immMode = false,
         .regs = {
             [0] = {.name = 'A', .val = 0x00, .actLine = false, .update = FALLING},
             [1] = {.name = 'B', .val = 0x00, .actLine = false, .update = FALLING},
@@ -64,7 +65,7 @@ int main(int argc, char** argv){
             .reg2Sel = 0,
             .depReg = 0,
 
-            .reg{
+            .reg = {
                 [0] = {.name = 'a', .content = false, .actLine = false, .update = FALLING},
                 [1] = {.name = 'b', .content = false, .actLine = false, .update = FALLING},
                 [2] = {.name = 'c', .content = false, .actLine = false, .update = FALLING},
@@ -76,6 +77,13 @@ int main(int argc, char** argv){
     };
 
     printf("%d\n", sizeof(cpu));
+
+    u8 buf[1];
+
+    while(!(cpu.control.halt)){
+        fread(buf, sizeof(buf), 1, inFile);
+        intDecode(*buf, &cpu);
+    }
 
     //fclose(inFile);
 

@@ -8,7 +8,7 @@ typedef struct ControlReg{
     char name;
     bool content, actLine;
 
-    Clockstate update;
+    ClockState update;
 } ControlReg;
 
 typedef struct Control{
