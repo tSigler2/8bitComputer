@@ -154,5 +154,12 @@ void generateBinary(struct Token* program, FILE* outFile){
         fseek(outFile, (long)funcIndex[i]+3, 0);
         fwrite(&high, sizeof(u8), 1, outFile);
     }
+
+    for(int i = 0; i < program->childNum; i++) free(funcAddresses[i]);
+    free(funcAddresses);
+
+    for(int i = 0; i < funcIndexP; i++) free(funcNote[i]);
+    free(funcNote[i]);
+
     free(funcTracker);
 }

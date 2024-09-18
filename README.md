@@ -22,7 +22,7 @@ Programs for the computer are loaded into ROM, which also has a 16-bit address w
 0 Arguments:
 - hlt: Halts all execution on the minicomputer.
 - rst: Resets all register contents on the minicomputer, including status registers
-- scn: Draws a single grayscale pixel to the 256 x 256 pixel screen. The X coordinate of the drawing is determined by the contents of register 
+- scn: Draws a single grayscale pixel to the 256 x 256 pixel screen. The X coordinate of the drawing is determined by the contents of register C (X Axis) and register D (Y Axis).
 
 1 Argument:
 - inp: Takes 8-bits from the single input port connected to the computer. Argument provided is the destination register for the input value.
