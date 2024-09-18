@@ -11,7 +11,7 @@ ClockState clockForward(ClockState cs){
         case FALLING:
             return LOW;
         default:
-            perror("Clock State Error\n");
+            perror("Clock State Error");
             exit(1);
     }
 }

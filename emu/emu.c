@@ -58,7 +58,20 @@ int main(int argc, char** argv){
             .ldc = false,
             .input = false,
             .reset = false,
-            .screen = false
+            .screen = false,
+
+            .reg1Sel = 0,
+            .reg2Sel = 0,
+            .depReg = 0,
+
+            .reg{
+                [0] = {.name = 'a', .content = false, .actLine = false, .update = FALLING},
+                [1] = {.name = 'b', .content = false, .actLine = false, .update = FALLING},
+                [2] = {.name = 'c', .content = false, .actLine = false, .update = FALLING},
+                [3] = {.name = 'd', .content = false, .actLine = false, .update = FALLING},
+                [4] = {.name = 'l', .content = false, .actLine = false, .update = FALLING},
+                [5] = {.name = 'h', .content = false, .actLine = false, .update = FALLING}
+            }
         }
     };
 
