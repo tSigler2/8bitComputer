@@ -19,5 +19,8 @@ typedef struct CPU{
 static inline void registerUpdate(CPU* cpu, u8 value);
 static inline void aluOperations(CPU* cpu);
 static inline void memOps(CPU* cpu);
+static inline void immOperation(CPU* cpu, u8 val);
+static inline void inputOperation(CPU* cpu, u8 val);
+void instructProcess(CPU* cpu);
 
 #endif

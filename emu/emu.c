@@ -67,6 +67,7 @@ int main(int argc, char** argv){
             .reg2Sel = 0,
             .depReg = 0,
             .regSelect = 0,
+            .inSelect,
 
             .reg = {
                 [0] = {.name = 'a', .content = 0x00, .actLine = false, .update = FALLING},

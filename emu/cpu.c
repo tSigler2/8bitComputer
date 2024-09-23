@@ -28,3 +28,19 @@ static inline void memOps(CPU* cpu){
     if(cpu->ram.read) cpu->control.valLines[1] = cpu->ram.mem[((((u16)cpu->regs[5].val) << 8) + ((u16)cpu->regs[4].val))];
     if(cpu->ram.write) cpu->ram.mem[((((u16)cpu->regs[5].val) << 8) + ((u16)cpu->regs[4].val))] = cpu->regs[cpu->control.regSelect].val;
 }
+
+static inline void immOperation(CPU* cpu, u8 val){
+    if(cpu->immMode) cpu->control.valLines[2] = val;
+}
+
+static inline void inputOperation(CPU* cpu, u8 val){
+    if(cpu->control.input) cpu->control.valLines[3] = val;
+}
+
+void instructProcess(CPU* cpu, u8 instruction){
+    aluOperations(cpu);
+    memOps(cpu);
+    immOperation(cpu, instruction);
+    inputOperation(cpu, instruction);
+    registerUpdate(cpu, cpu->control.valLines[cpu->control.inSelect]);
+}
