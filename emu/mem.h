@@ -9,6 +9,7 @@ typedef uint16_t u16;
 typedef struct Memory{
     u8 mem[65536];
     u16 memPointer;
+    bool read, write;
 } RAM;
 
 #endif

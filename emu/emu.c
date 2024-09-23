@@ -44,7 +44,9 @@ int main(int argc, char** argv){
         },
         .ram = {
             .mem = {0x00},
-            .memPointer = 0x0000
+            .memPointer = 0x0000,
+            .read = false,
+            .write = false
         },
         .control = {
             .halt = false,
@@ -64,25 +66,39 @@ int main(int argc, char** argv){
             .reg1Sel = 0,
             .reg2Sel = 0,
             .depReg = 0,
+            .regSelect = 0,
 
             .reg = {
-                [0] = {.name = 'a', .content = false, .actLine = false, .update = FALLING},
-                [1] = {.name = 'b', .content = false, .actLine = false, .update = FALLING},
-                [2] = {.name = 'c', .content = false, .actLine = false, .update = FALLING},
-                [3] = {.name = 'd', .content = false, .actLine = false, .update = FALLING},
-                [4] = {.name = 'l', .content = false, .actLine = false, .update = FALLING},
-                [5] = {.name = 'h', .content = false, .actLine = false, .update = FALLING}
-            }
+                [0] = {.name = 'a', .content = 0x00, .actLine = false, .update = FALLING},
+                [1] = {.name = 'b', .content = 0x00, .actLine = false, .update = FALLING},
+                [2] = {.name = 'c', .content = 0x00, .actLine = false, .update = FALLING},
+                [3] = {.name = 'd', .content = 0x00, .actLine = false, .update = FALLING},
+                [4] = {.name = 'l', .content = 0x00, .actLine = false, .update = FALLING},
+                [5] = {.name = 'h', .content = 0x00, .actLine = false, .update = FALLING}
+            },
+
+            .flags = {false},
+
+            .valLines = {0x00}
+        },
+        .screen = {
+            .update = RISING,
+            .actLine = false
         }
     };
-
-    printf("%d\n", sizeof(cpu));
+    
+    initScreen(&cpu.screen);
 
     u8 buf[1];
 
+    struct timespec ts;
     while(!(cpu.control.halt)){
+        clock_gettime(CLOCK_REALTIME, &ts);
         fread(buf, sizeof(buf), 1, inFile);
         intDecode(*buf, &cpu);
+        cpu.clock.cs = clockForward(cpu.clock.cs);
+
+        while(ts.tv_nsec % cpu.clock.speed != (long)0) clock_gettime(CLOCK_REALTIME, &ts);
     }
 
     //fclose(inFile);

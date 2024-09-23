@@ -21,7 +21,7 @@ int inPerSec;
 
 #define SETSPEED(_s) ((_s)/4)
 
-ClockState ClockForward(ClockState cs);
+ClockState clockForward(ClockState cs);
 
 typedef struct Clock{
     ClockState cs;
