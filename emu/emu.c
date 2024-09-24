@@ -100,7 +100,7 @@ int main(int argc, char** argv){
         intDecode(*buf, &cpu);
         instructProcess(&cpu, buf[0]);
         cpu.clock.cs = clockForward(cpu.clock.cs);
-
+        printf("%x\n", buf);
         while(ts.tv_nsec % cpu.clock.speed != (long)0) clock_gettime(CLOCK_REALTIME, &ts);
     }
 

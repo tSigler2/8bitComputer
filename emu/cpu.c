@@ -42,8 +42,8 @@ static inline void keyboardOperation(CPU* cpu){
             input += 0x80;
         }
 
-        if(cpu->screen.event.key.keysym.sym == SDLK_W) input += 0x01;
-        else if(cpu->screen.event.key.keysym.sym == SDLK_DOWN) input += 0x0f;
+        if(cpu->screen.event.key.keysym.sym == SDLK_w) input += 0x01;
+        else if(cpu->screen.event.key.keysym.sym == SDLK_s) input += 0x0f;
         else{
             input += 0x08;
         }
@@ -56,6 +56,6 @@ void instructProcess(CPU* cpu, u8 instruction){
     aluOperations(cpu);
     memOps(cpu);
     immOperation(cpu, instruction);
-    inputOperation(cpu, instruction);
+    keyboardOperation(cpu);
     registerUpdate(cpu, cpu->control.valLines[cpu->control.inSelect]);
 }

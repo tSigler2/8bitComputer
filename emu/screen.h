@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "clock.h"
-
 #define SCREEN_DIMS 256
 #define COLOR_MASK 0x0f
 
@@ -18,6 +17,7 @@ typedef struct {
     ClockState update;
     bool actLine;
     u8 colorRegister;
+    SDL_Event event;
 } Screen;
 
 void initScreen(Screen* screen);
