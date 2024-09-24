@@ -33,8 +33,23 @@ static inline void immOperation(CPU* cpu, u8 val){
     if(cpu->immMode) cpu->control.valLines[2] = val;
 }
 
-static inline void inputOperation(CPU* cpu, u8 val){
-    if(cpu->control.input) cpu->control.valLines[3] = val;
+static inline void keyboardOperation(CPU* cpu){
+    u8 input = 0x00;
+    while(SDL_PollEvent(&cpu->screen.event) != 0){
+        if(cpu->screen.event.key.keysym.sym == SDLK_UP) input += 0x10;
+        else if(cpu->screen.event.key.keysym.sym == SDLK_DOWN) input += 0xf0;
+        else{
+            input += 0x80;
+        }
+
+        if(cpu->screen.event.key.keysym.sym == SDLK_W) input += 0x01;
+        else if(cpu->screen.event.key.keysym.sym == SDLK_DOWN) input += 0x0f;
+        else{
+            input += 0x08;
+        }
+    }
+
+    cpu->control.valLines[3] = input;
 }
 
 void instructProcess(CPU* cpu, u8 instruction){

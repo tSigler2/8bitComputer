@@ -84,7 +84,8 @@ int main(int argc, char** argv){
         },
         .screen = {
             .update = RISING,
-            .actLine = false
+            .actLine = false,
+            .colorRegister = 0x00
         }
     };
     

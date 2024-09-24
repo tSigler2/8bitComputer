@@ -21,6 +21,7 @@ static inline void aluOperations(CPU* cpu);
 static inline void memOps(CPU* cpu);
 static inline void immOperation(CPU* cpu, u8 val);
 static inline void inputOperation(CPU* cpu, u8 val);
+static inline void keyboardOperation(CPU* cpu);
 void instructProcess(CPU* cpu, u8 instruction);
 
 #endif

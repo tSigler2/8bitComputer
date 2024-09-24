@@ -8,6 +8,7 @@
 #include "clock.h"
 
 #define SCREEN_DIMS 256
+#define COLOR_MASK 0x0f
 
 typedef uint8_t u8;
 
@@ -16,6 +17,7 @@ typedef struct {
     SDL_Window* window;
     ClockState update;
     bool actLine;
+    u8 colorRegister;
 } Screen;
 
 void initScreen(Screen* screen);
