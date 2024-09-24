@@ -67,7 +67,7 @@ int main(int argc, char** argv){
             .reg2Sel = 0,
             .depReg = 0,
             .regSelect = 0,
-            .inSelect,
+            .inSelect = 0,
 
             .reg = {
                 [0] = {.name = 'a', .content = 0x00, .actLine = false, .update = FALLING},
@@ -97,6 +97,7 @@ int main(int argc, char** argv){
         clock_gettime(CLOCK_REALTIME, &ts);
         fread(buf, sizeof(buf), 1, inFile);
         intDecode(*buf, &cpu);
+        instructProcess(&cpu, buf[0]);
         cpu.clock.cs = clockForward(cpu.clock.cs);
 
         while(ts.tv_nsec % cpu.clock.speed != (long)0) clock_gettime(CLOCK_REALTIME, &ts);
