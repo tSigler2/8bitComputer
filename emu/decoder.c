@@ -5,7 +5,7 @@ void intDecode(u8 instruction, CPU* cpu){
     u8 intTail = (instruction & 0x0f);
 
     if(!(intHead == 0x20) && !(intHead == 0x30) && !(intHead == 0x40) && !(intHead == 0x50)) resetALU(&cpu->control);
-    if(cpu->immMode) exitImmMode(cpu);
+    if(cpu->immMode) return;
 
     switch(intHead){
         case 0x00:
@@ -33,7 +33,7 @@ void intDecode(u8 instruction, CPU* cpu){
         case 0x60:
             cpu->control.lda = true;
             controlRegOps(intTail, &cpu->control);
-            cpu->immMode = true;
+            cpu->immMode = 2;
             break;
         case 0x70:
             cpu->control.write = true;

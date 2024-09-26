@@ -2,12 +2,12 @@
 
 fnc _start:
     rst
-    mov a, 1
+    mov a, 0
     mov b, 1
     add a, c, a
-    mov l, 0x0d
     mov c, 5
     jmp _fib
+
 fnc _restart:
     hlt
 
@@ -17,7 +17,7 @@ fnc _fib:
     add a, b, a
     mov b, 0
     add b, c, b
-    mov l, 0x0b
+    mov l, 11
     jmp _restart
     mov b, 1
     mov d, 1
@@ -28,6 +28,7 @@ fnc _fib:
     wrt b
     lda c
     add b, c, b
-    mov l, 0x0d
+    mov l, 13
     lda b
     jmp _restart
+    end

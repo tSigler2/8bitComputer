@@ -28,7 +28,7 @@ int main(int argc, char** argv){
         else if (strcmp(argv[i], "./asm.o") == 0) continue;
         else if(inFile == NULL) inFile = argv[i];
     }
-
+    char* inFile = "asm_ex/fibonacchi.asm";
     FILE* asmFile = fopen(inFile, "r");
 
     if(asmFile == NULL){

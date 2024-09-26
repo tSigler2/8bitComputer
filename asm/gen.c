@@ -75,6 +75,7 @@ u8 checkCommand(struct Token* token){
 int findFuncAddress(char** funcAddressList, char* func, int childAmt){
     if(func[strlen(func)-1] == '\n' || func[strlen(func)-1] == ' ') func[strlen(func)-1] = '\0';
     for(int i = 0; i < childAmt; i++){
+        printf("%s\n", funcAddressList[i]);
         if(strcmp(func, funcAddressList[i]) == 0) return i;
     }
     printf("Function Finding Error\n");
@@ -135,7 +136,7 @@ void generateBinary(struct Token* program, FILE* outFile){
             lastCommand = command;
 
             if(loadImm){
-                fwrite(&program->children[i]->children[j]->children[0]->data, sizeof(u8), 1, outFile);
+                fwrite(&(program->children[i]->children[j]->children[1]->data), sizeof(u8), 1, outFile);
                 loadImm = false;
                 lastCommand = 0x01;
                 byteCounter++;
@@ -146,12 +147,12 @@ void generateBinary(struct Token* program, FILE* outFile){
     int funcFind;
     u8 high, low;
     for(int i = 0; i < funcIndexP; i++){
-        fseek(outFile, (long)funcIndex[i]+1, 0);
+        fseek(outFile, (long)(funcIndex[i]+2), 0);
         funcFind = findFuncAddress(funcAddresses, funcNote[i], program->childNum);
         low = funcTracker[2*funcFind];
         high = funcTracker[2*funcFind+1];
-        fwrite(&low, sizeof(u8), 1, outFile+1);
-        fseek(outFile, (long)funcIndex[i]+3, 0);
+        fwrite(&low, sizeof(u8), 1, outFile);
+        fseek(outFile, 1, SEEK_CUR);
         fwrite(&high, sizeof(u8), 1, outFile);
     }
 

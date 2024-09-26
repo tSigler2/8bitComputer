@@ -59,6 +59,7 @@ void readArgs(struct Token** tok, int tokCount, int* count, int* lineCount){
         }
         else{
             tok[tokCount]->children[i]->data = (u8)atoi(src);
+            //printf("%x\n", tok[tokCount]->children[i]->data);
             tok[tokCount]->children[i]->childNum = 0;
             tok[tokCount]->children[i]->type = TK_CONST;
             tok[tokCount]->children[i]->src = *lineCount;
@@ -129,7 +130,7 @@ void parse(FILE* asmFile, struct Token* program){
 
     lineCount = 0; int lineAux, tk_count = -1, fnc_count = 0;
     while(fgets(s, sizeof(s), asmFile)){
-        if(strcmp(s, "\n") == 0){
+        if(s[0] == '\n'){
             lineCount++;
             continue;
         }
@@ -142,7 +143,7 @@ void parse(FILE* asmFile, struct Token* program){
             exit(1);
         }
 
-        if((strcmp(tok, "fnc") == 0 || feof(asmFile)) && tk_count != -1){
+        if((strcmp(tok, "fnc") == 0 || feof(asmFile) || strcmp(tok, "end") == 0) && tk_count != -1){
             program->children[tk_count]->src = lineCount;
             program->children[tk_count]->childNum = fnc_count;
             program->children[tk_count]->children = malloc(sizeof(struct Token*) * program->children[tk_count]->childNum);

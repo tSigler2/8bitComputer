@@ -4,6 +4,7 @@ static inline void registerUpdate(CPU* cpu, u8 value){
     for(int i = 0; i < 6; i++){
         if(cpu->regs[i].actLine && cpu->clock.cs == cpu->regs[i].update) cpu->regs[i].val = value;
     }
+    if(cpu->immMode) cpu->immMode--;
 }
 
 static inline void aluOperations(CPU* cpu){
@@ -17,7 +18,7 @@ static inline void aluOperations(CPU* cpu){
         return;
     }
 
-    if(!(result & 0x00)) cpu->control.flags[2] = true;
+    if(result == 0x00) cpu->control.flags[2] = true;
     if((result & 0x80)) cpu->control.flags[1] = true;
     if((result < cpu->regs[cpu->control.reg1Sel].val) || (result < cpu->regs[cpu->control.reg2Sel].val)) cpu->control.flags[0] = true;
     
@@ -30,7 +31,7 @@ static inline void memOps(CPU* cpu){
 }
 
 static inline void immOperation(CPU* cpu, u8 val){
-    if(cpu->immMode) cpu->control.valLines[2] = val;
+    if(cpu->immMode > 0) cpu->control.valLines[2] = val;
 }
 
 static inline void keyboardOperation(CPU* cpu){

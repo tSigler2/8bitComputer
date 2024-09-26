@@ -13,7 +13,7 @@ typedef struct CPU{
     RAM ram;
     Control control;
     Screen screen;
-    bool immMode;
+    int immMode;
 } CPU;
 
 static inline void registerUpdate(CPU* cpu, u8 value);

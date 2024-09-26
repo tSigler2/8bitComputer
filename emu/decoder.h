@@ -11,8 +11,6 @@ static inline void controlRegOps(u8 lower, Control* control){
 }
 
 static inline void exitImmMode(CPU* cpu){
-    cpu->immMode = false;
-
     for(int i = 0; i < 6; i++) cpu->control.reg[i].content = CONTROL(cpu->control.reg[i].content, false);
 }
 

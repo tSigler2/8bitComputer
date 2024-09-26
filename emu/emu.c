@@ -3,7 +3,7 @@
 #include "decoder.h"
 
 int main(int argc, char** argv){
-    if(argc < 2){
+    /*if(argc < 2){
         perror("No Input File");
         exit(1);
     }
@@ -24,6 +24,14 @@ int main(int argc, char** argv){
                 exit(1);
             }
         }
+    }*/
+
+    inFile = fopen("bin/fibonacchi.bin", "rb");
+
+
+    if(inFile == NULL){
+        perror("Failed to Open File");
+        exit(1);
     }
 
     if(!inPerSec) inPerSec = 100;
@@ -91,16 +99,18 @@ int main(int argc, char** argv){
     
     initScreen(&cpu.screen);
 
-    u8 buf[1];
+    u8 instruction;
 
     struct timespec ts;
     while(!(cpu.control.halt)){
         clock_gettime(CLOCK_REALTIME, &ts);
-        fread(buf, sizeof(buf), 1, inFile);
-        intDecode(*buf, &cpu);
-        instructProcess(&cpu, buf[0]);
+        fread(&instruction, sizeof(u8), 1, inFile);
+        intDecode(instruction, &cpu);
+        instructProcess(&cpu, instruction);
         cpu.clock.cs = clockForward(cpu.clock.cs);
-        printf("%x\n", buf);
+        printf("%x %d\n", instruction, cpu.control.flags[2]);
+
+        if(cpu.control.jump && cpu.control.flags[2]) fseek(inFile, (long)((((u16)cpu.regs[4].val) << 8) + ((u16) cpu.regs[5].val)), 0);
         while(ts.tv_nsec % cpu.clock.speed != (long)0) clock_gettime(CLOCK_REALTIME, &ts);
     }
 
