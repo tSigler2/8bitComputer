@@ -5,3 +5,5 @@ bin
 assembler
 
 *.o
+
+*.dSYM*
