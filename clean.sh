@@ -1,3 +1,3 @@
 #!/bin/zsh
-rm -r bin
-rm asm.o
+rm -r bin *.o.dSYM*
+rm *.o

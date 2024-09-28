@@ -17,7 +17,6 @@ fnc _fib:
     add a, b, a
     mov b, 0
     add b, c, b
-    mov l, 11
     jmp _restart
     mov b, 1
     mov d, 1

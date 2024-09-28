@@ -59,7 +59,6 @@ u8 checkCommand(struct Token* token){
             }
             return (u8) (byte + token->children[0]->data);
         case LOADM:
-            printf("%x", byte);
             return (u8) (byte + token->children[0]->data);
         case INPUT:
             return byte;
@@ -90,7 +89,7 @@ void generateBinary(struct Token* program, FILE* outFile){
     char** funcAddresses = malloc(sizeof(char*)*(program->childNum+1));
     char** funcNote = malloc(sizeof(char*)*1024);
 
-    u16 funcIndex[1024] = {0x0000};
+    long funcIndex[1024] = {0};
     int funcIndexP = 0;
 
     u16 byteCounter = 0x0000;
@@ -127,6 +126,7 @@ void generateBinary(struct Token* program, FILE* outFile){
             command = checkCommand(program->children[i]->children[j]);
             if(command == 0x00 && lastCommand == 0x00) continue;
             if(command == JUMP){
+                funcIndex[funcIndexP] = ftell(outFile);
                 jumpAdd = (u8)(LOADI+L);
                 fwrite(&jumpAdd, sizeof(u8), 1, outFile);
                 jumpAdd = (u8)0x00;
@@ -135,7 +135,6 @@ void generateBinary(struct Token* program, FILE* outFile){
                 fwrite(&jumpAdd, sizeof(u8), 1, outFile);
                 jumpAdd = (u8)0x00;
                 fwrite(&jumpAdd, sizeof(u8), 1, outFile);
-                funcIndex[funcIndexP] = byteCounter;
                 funcNote[funcIndexP] = malloc(sizeof(char)*(strlen(program->children[i]->children[j]->srcData)+1));
                 strcpy(funcNote[funcIndexP], program->children[i]->children[j]->srcData);
                 funcIndexP++;
@@ -154,11 +153,14 @@ void generateBinary(struct Token* program, FILE* outFile){
             }
         }
     }
-    
+
+    for(int i = 0; i < funcIndexP; i++){
+        printf("%x\n", funcIndex[i]);
+    }
     int funcFind;
     u8 high, low;
     for(int i = 0; i < funcIndexP; i++){
-        fseek(outFile, (long)(funcIndex[i]+2), 0);
+        fseek(outFile, (funcIndex[i]+1), SEEK_SET);
         funcFind = findFuncAddress(funcAddresses, funcNote[i], program->childNum);
         low = funcTracker[2*funcFind];
         high = funcTracker[2*funcFind+1];
