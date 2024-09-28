@@ -73,7 +73,7 @@ int main(int argc, char** argv){
     }
 
     if(reset){
-        u8 r = (u8) 0x10;
+        u8 r = (u8) 0xb0;
         fwrite(&r, sizeof(u8), 1, binFile);
     }
 

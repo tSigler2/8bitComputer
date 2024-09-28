@@ -57,8 +57,8 @@ enum Register{
     B = (u8)0x01,
     C = (u8)0x02,
     D = (u8)0x03,
-    L = (u8)0x04,
-    H = (u8)0x05
+    L = (u8)0x05,
+    H = (u8)0x04
 };
 
 struct Token{
