@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.asm": "c",
+        "stat.h": "c"
+    },
+    "C_Cpp.intelliSenseEngineFallback": "disabled"
+}

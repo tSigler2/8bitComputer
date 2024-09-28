@@ -1,9 +1,0 @@
-.vscode/
-
-bin
-
-assembler
-
-*.o
-
-*.dSYM*

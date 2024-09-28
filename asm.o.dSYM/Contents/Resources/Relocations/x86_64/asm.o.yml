@@ -1,0 +1,26 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     asm.o
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _deallocToken, symObjAddr: 0x0, symBinAddr: 0x100000F90, symSize: 0x80 }
+  - { offset: 0x3F, size: 0x8, addend: 0x0, symName: _verbose, symObjAddr: 0x20A0, symBinAddr: 0x100005008, symSize: 0x0 }
+  - { offset: 0x5B, size: 0x8, addend: 0x0, symName: _reset, symObjAddr: 0x437, symBinAddr: 0x100005000, symSize: 0x0 }
+  - { offset: 0x70, size: 0x8, addend: 0x0, symName: _inFile, symObjAddr: 0x20A8, symBinAddr: 0x100005010, symSize: 0x0 }
+  - { offset: 0x91, size: 0x8, addend: 0x0, symName: _ramPointer, symObjAddr: 0x20B0, symBinAddr: 0x100005018, symSize: 0x0 }
+  - { offset: 0xB4, size: 0x8, addend: 0x0, symName: _program, symBinAddr: 0x100005030, symSize: 0x0 }
+  - { offset: 0x1CD, size: 0x8, addend: 0x0, symName: _funcTracker, symBinAddr: 0x100005020, symSize: 0x0 }
+  - { offset: 0x204, size: 0x8, addend: 0x0, symName: _loadImm, symBinAddr: 0x100005028, symSize: 0x0 }
+  - { offset: 0x20E, size: 0x8, addend: 0x0, symName: _deallocToken, symObjAddr: 0x0, symBinAddr: 0x100000F90, symSize: 0x80 }
+  - { offset: 0x24E, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x80, symBinAddr: 0x100001010, symSize: 0x3B7 }
+  - { offset: 0x75F, size: 0x8, addend: 0x0, symName: _getRegister, symObjAddr: 0x0, symBinAddr: 0x1000013D0, symSize: 0xC0 }
+  - { offset: 0x786, size: 0x8, addend: 0x0, symName: _program, symBinAddr: 0x100005030, symSize: 0x0 }
+  - { offset: 0x900, size: 0x8, addend: 0x0, symName: _getRegister, symObjAddr: 0x0, symBinAddr: 0x1000013D0, symSize: 0xC0 }
+  - { offset: 0x928, size: 0x8, addend: 0x0, symName: _readArgs, symObjAddr: 0xC0, symBinAddr: 0x100001490, symSize: 0x3B0 }
+  - { offset: 0x9A0, size: 0x8, addend: 0x0, symName: _parse, symObjAddr: 0x470, symBinAddr: 0x100001840, symSize: 0x1240 }
+  - { offset: 0xB19, size: 0x8, addend: 0x0, symName: _parseFolder, symObjAddr: 0x16B0, symBinAddr: 0x100002A80, symSize: 0x239 }
+  - { offset: 0xDE1, size: 0x8, addend: 0x0, symName: _checkRegCombo, symObjAddr: 0x0, symBinAddr: 0x100002CC0, symSize: 0x1B0 }
+  - { offset: 0xF38, size: 0x8, addend: 0x0, symName: _checkRegCombo, symObjAddr: 0x0, symBinAddr: 0x100002CC0, symSize: 0x1B0 }
+  - { offset: 0xF6E, size: 0x8, addend: 0x0, symName: _checkCommand, symObjAddr: 0x1B0, symBinAddr: 0x100002E70, symSize: 0x3B0 }
+  - { offset: 0xFA4, size: 0x8, addend: 0x0, symName: _findFuncAddress, symObjAddr: 0x560, symBinAddr: 0x100003220, symSize: 0xF0 }
+  - { offset: 0x1004, size: 0x8, addend: 0x0, symName: _generateBinary, symObjAddr: 0x650, symBinAddr: 0x100003310, symSize: 0x8DE }
+...
