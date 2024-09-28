@@ -154,9 +154,6 @@ void generateBinary(struct Token* program, FILE* outFile){
         }
     }
 
-    for(int i = 0; i < funcIndexP; i++){
-        printf("%x\n", funcIndex[i]);
-    }
     int funcFind;
     u8 high, low;
     for(int i = 0; i < funcIndexP; i++){
