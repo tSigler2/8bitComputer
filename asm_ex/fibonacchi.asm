@@ -26,9 +26,9 @@ fnc _fib:
     add b, c, b
     mov l, 1
     wrt b
-    lda c
+    ldm c
     add b, c, b
     mov l, 13
-    lda b
+    ldm b
     jmp _restart
     end

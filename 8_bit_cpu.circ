@@ -112,6 +112,12 @@
       <a name="value" val="0x2"/>
       <a name="width" val="2"/>
     </comp>
+    <comp lib="0" loc="(30,1000)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="4"/>
+    </comp>
     <comp lib="0" loc="(350,370)" name="Clock">
       <a name="facing" val="south"/>
     </comp>
@@ -134,6 +140,12 @@
       <a name="facing" val="west"/>
       <a name="value" val="0x0"/>
       <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(90,990)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(940,1270)" name="Constant">
       <a name="facing" val="west"/>
@@ -302,7 +314,8 @@
     <wire from="(290,510)" to="(290,530)"/>
     <wire from="(290,510)" to="(500,510)"/>
     <wire from="(290,560)" to="(290,570)"/>
-    <wire from="(30,950)" to="(30,1040)"/>
+    <wire from="(30,1000)" to="(30,1040)"/>
+    <wire from="(30,950)" to="(30,1000)"/>
     <wire from="(30,950)" to="(80,950)"/>
     <wire from="(360,400)" to="(620,400)"/>
     <wire from="(370,360)" to="(370,370)"/>
@@ -439,7 +452,8 @@
     <wire from="(890,940)" to="(1030,940)"/>
     <wire from="(890,940)" to="(890,990)"/>
     <wire from="(90,1030)" to="(100,1030)"/>
-    <wire from="(90,950)" to="(90,1030)"/>
+    <wire from="(90,950)" to="(90,990)"/>
+    <wire from="(90,990)" to="(90,1030)"/>
     <wire from="(900,750)" to="(900,780)"/>
     <wire from="(900,780)" to="(960,780)"/>
     <wire from="(900,810)" to="(900,1090)"/>

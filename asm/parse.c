@@ -43,7 +43,7 @@ void readArgs(struct Token** tok, int tokCount, int* count, int* lineCount){
 
         tok[tokCount]->children[i]->childNum = 0;
 
-        if(strncmp(src, "a", 1) == 0 || strncmp(src, "b", 1) == 0 || strncmp(src, "c", 1) == 0 || strncmp(src, "d", 1) == 0){
+        if(strncmp(src, "a", 1) == 0 || strncmp(src, "b", 1) == 0 || strncmp(src, "c", 1) == 0 || strncmp(src, "d", 1) == 0 ||  strncmp(src, "l", 1) == 0 || strncmp(src, "h", 1) == 0){
             tok[tokCount]->children[i]->data = getRegister(src[0]);
             tok[tokCount]->children[i]->childNum = 0;
             tok[tokCount]->children[i]->type = TK_REG;
@@ -116,14 +116,13 @@ void parse(FILE* asmFile, struct Token* program){
     rewind(asmFile);
     while(fgets(s, sizeof(s), asmFile)){
         funcTokPoint = strtok(s, " \t,:");
-        if (funcTokPoint == NULL) continue;
+        if(funcTokPoint == NULL) continue;
         if(!strcmp(funcTokPoint, "fnc")){
             if(tokPoint < program->childNum-1) tokPoint++;
             funcTokPoint = strtok(NULL, " \t,:");
             if(funcTokPoint == NULL) continue;
             program->children[tokPoint]->srcData = malloc(sizeof(char)*(strlen(funcTokPoint)+1));
             strcpy(program->children[tokPoint]->srcData, funcTokPoint);
-            
         }
     }
     rewind(asmFile);
@@ -210,10 +209,12 @@ void parse(FILE* asmFile, struct Token* program){
         else if(strcmp(tok, "inp") == 0 ||
         strcmp(tok, "jmp") == 0 ||
         strcmp(tok, "wrt") == 0 ||
-        strcmp(tok, "ldc") == 0){
+        strcmp(tok, "ldc") == 0 ||
+        strcmp(tok, "ldm") == 0){
             if(strcmp(tok, "inp") == 0) op = INPUT;
             else if(strcmp(tok, "wrt") == 0) op = WRITE;
             else if(strcmp(tok, "jmp") == 0) op = JUMP;
+            else if(strcmp(tok, "ldm") == 0) op = LOADM;
             else{
                 op = LOADC;
             }
@@ -237,9 +238,8 @@ void parse(FILE* asmFile, struct Token* program){
             count++;
         }
 
-        else if(strcmp(tok, "not") == 0 || strcmp(tok, "mov") == 0 || strcmp(tok, "ldm") == 0){
+        else if(strcmp(tok, "not") == 0 || strcmp(tok, "mov") == 0){
             if(strcmp(tok, "not") == 0) op = NOT;
-            else if(strcmp(tok, "ldm") == 0) op = LOADM;
             else{
                 op = LOADI;
             }

@@ -59,6 +59,7 @@ u8 checkCommand(struct Token* token){
             }
             return (u8) (byte + token->children[0]->data);
         case LOADM:
+            printf("%x", byte);
             return (u8) (byte + token->children[0]->data);
         case INPUT:
             return byte;
@@ -75,7 +76,6 @@ u8 checkCommand(struct Token* token){
 int findFuncAddress(char** funcAddressList, char* func, int childAmt){
     if(func[strlen(func)-1] == '\n' || func[strlen(func)-1] == ' ') func[strlen(func)-1] = '\0';
     for(int i = 0; i < childAmt; i++){
-        printf("%s\n", funcAddressList[i]);
         if(strcmp(func, funcAddressList[i]) == 0) return i;
     }
     printf("Function Finding Error\n");
@@ -94,24 +94,35 @@ void generateBinary(struct Token* program, FILE* outFile){
     int funcIndexP = 0;
 
     u16 byteCounter = 0x0000;
+    for(int i = 1; i < program->childNum; i++){
+        for(int j = 0; j < program->children[i-1]->childNum; j++){
+            if(j > 0){
+                if(program->children[i-1]->children[j]->data == HALT && program->children[i-1]->children[j-1]->data == HALT) continue;
+            }
+            if(program->children[i-1]->children[j]->data == LOADI) byteCounter += 2;
+            else if(program->children[i-1]->children[j]->data == JUMP) byteCounter += 5;
+            else{
+                byteCounter += 1;
+            }
+        }
+
+        funcTracker[2*i] = (u8)byteCounter;
+        funcTracker[2*i+1] = (u8)(byteCounter >> 8);
+    }
+
     u8 command, jumpAdd, lastCommand;
 
     for(int i = 0; i < program->childNum; i++){
         funcAddresses[i] = malloc(sizeof(char)*(strlen(program->children[i]->srcData)+1));
         strcpy(funcAddresses[i], program->children[i]->srcData);
     }
-    
+    byteCounter = 0x0000;
     for(int i = 0; i < program->childNum; i++){
-        if(i > 0){
-            funcTracker[2*i] = (u8)byteCounter;
-            funcTracker[2*i+1] = (u8)(byteCounter >> 8);
-        }
         if(program->children[i] == NULL){
             printf("Null Token\n");
             exit(1);
         }
         if(program->children[i]->children == NULL) continue;
-
         for(int j = 0; j < program->children[i]->childNum; j++){
             command = checkCommand(program->children[i]->children[j]);
             if(command == 0x00 && lastCommand == 0x00) continue;
@@ -143,7 +154,7 @@ void generateBinary(struct Token* program, FILE* outFile){
             }
         }
     }
-
+    
     int funcFind;
     u8 high, low;
     for(int i = 0; i < funcIndexP; i++){
