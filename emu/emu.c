@@ -110,7 +110,7 @@ int main(int argc, char** argv){
         cpu.clock.cs = clockForward(cpu.clock.cs);
         printf("%x %d\n", instruction, cpu.control.flags[2]);
 
-        if(cpu.control.jump && cpu.control.flags[2]) fseek(inFile, (long)((((u16)cpu.regs[4].val) << 8) + ((u16) cpu.regs[5].val)), 0);
+        if(cpu.control.jump && cpu.control.flags[2]) fseek(inFile, (long)((((u16)cpu.regs[4].val) << 8) + ((u16) cpu.regs[5].val)), SEEK_SET);
         while(ts.tv_nsec % cpu.clock.speed != (long)0) clock_gettime(CLOCK_REALTIME, &ts);
     }
 
