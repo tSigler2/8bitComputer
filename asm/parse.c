@@ -189,7 +189,7 @@ void parse(FILE* asmFile, struct Token* program){
         if(strcmp(tok, "hlt") == 0 || 
         strcmp(tok, "rst") == 0 ||
         strcmp(tok, "scn") == 0 || 
-        strcmp(tok, "pre" == 0)){
+        strcmp(tok, "pre") == 0){
             if(strcmp(tok, "hlt") == 0) op = HALT;
             else if(strcmp(tok, "rst") == 0) op = RESET;
             else if(strcmp(tok, "pre") == 0) op = PRESENT;

@@ -62,6 +62,6 @@ void instructProcess(CPU* cpu, u8 instruction){
     immOperation(cpu, instruction);
     keyboardOperation(cpu);
     registerUpdate(cpu, cpu->control.valLines[cpu->control.inSelect]);
-    drawPixel(&(cpu->register[2].val), &(cpu->register[3].val), &(cpu->clock.cs), &(cpu->screen), cpu->control.screen);
-    drawToScreen(&(cpu->screen), cpu->control->present);
+    drawPixel(&(cpu->regs[2].val), &(cpu->regs[3].val), &(cpu->screen.colorRegister), &(cpu->clock.cs), &(cpu->screen), cpu->control.screen);
+    drawToScreen(&(cpu->screen), &(cpu->control.present));
 }

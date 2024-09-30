@@ -34,8 +34,8 @@ void drawPixel(u8* xCoord, u8* yCoord, u8* color, ClockState* cs, Screen* screen
     if(*cs != RISING || !instruction) return;
 
     SDL_Rect rect = {
-        .x = xCoord,
-        .y = yCoord,
+        .x = *xCoord,
+        .y = *yCoord,
         .w = 1,
         .h = 1
     };
@@ -43,52 +43,52 @@ void drawPixel(u8* xCoord, u8* yCoord, u8* color, ClockState* cs, Screen* screen
     switch(*color){
         case 0x00:
             SDL_SetRenderDrawColor(screen->renderer, 0, 0, 0, 255);
-            break
+            break;
         case 0x01:
             SDL_SetRenderDrawColor(screen->renderer, 16, 16, 16, 255);
-            break
+            break;
         case 0x02:
             SDL_SetRenderDrawColor(screen->renderer, 32, 32, 32, 255);
-            break
+            break;
         case 0x03:
             SDL_SetRenderDrawColor(screen->renderer, 48, 48, 48, 255);
-            break
+            break;
         case 0x04:
             SDL_SetRenderDrawColor(screen->renderer, 64, 64, 64, 255);
-            break
+            break;
         case 0x05:
             SDL_SetRenderDrawColor(screen->renderer, 80, 80, 80, 255);
-            break
+            break;
         case 0x06:
             SDL_SetRenderDrawColor(screen->renderer, 96, 96, 96, 255);
-            break
+            break;
         case 0x07:
             SDL_SetRenderDrawColor(screen->renderer, 112, 112, 112, 255);
-            break
+            break;
         case 0x08:
             SDL_SetRenderDrawColor(screen->renderer, 128, 128, 128, 255);
-            break
+            break;
         case 0x09:
             SDL_SetRenderDrawColor(screen->renderer, 144, 144, 144, 255);
-            break
+            break;
         case 0x0a:
             SDL_SetRenderDrawColor(screen->renderer, 160, 160, 160, 255);
-            break
+            break;
         case 0x0b:
             SDL_SetRenderDrawColor(screen->renderer, 176, 176, 176, 255);
-            break
+            break;
         case 0x0c:
             SDL_SetRenderDrawColor(screen->renderer, 192, 192, 192, 255);
-            break
+            break;
         case 0x0d:
             SDL_SetRenderDrawColor(screen->renderer, 208, 208, 208, 255);
-            break
+            break;
         case 0x0e:
             SDL_SetRenderDrawColor(screen->renderer, 224, 224, 224, 255);
-            break
+            break;
         case 0x0f:
             SDL_SetRenderDrawColor(screen->renderer, 255, 255, 255, 255);
-            break
+            break;
         default:
             perror("Invalid Color");
             SDL_DestroyWindow(screen->window);

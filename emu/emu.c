@@ -114,8 +114,8 @@ int main(int argc, char** argv){
     }
 
     fclose(inFile);
-    SDL_DestroyWindow(screen->window);
-    SDL_DestroyRenderer(screen->renderer);
+    SDL_DestroyWindow(cpu.screen.window);
+    SDL_DestroyRenderer(cpu.screen.renderer);
 
     return 0;
 }
