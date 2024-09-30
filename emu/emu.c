@@ -3,7 +3,7 @@
 #include "decoder.h"
 
 int main(int argc, char** argv){
-    /*if(argc < 2){
+    if(argc < 2){
         perror("No Input File");
         exit(1);
     }
@@ -24,7 +24,7 @@ int main(int argc, char** argv){
                 exit(1);
             }
         }
-    }*/
+    }
 
     inFile = fopen("bin/fibonacchi.bin", "rb");
 
