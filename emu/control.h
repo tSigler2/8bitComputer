@@ -13,7 +13,7 @@ typedef struct ControlReg{
 
 typedef struct Control{
     bool halt, jump, add, andOp, orOp, notOp, lda, 
-    write, ldm, ldc, input, reset, screen;
+    write, ldm, ldc, input, reset, screen, present;
 
     int reg1Sel, reg2Sel, depReg, regSelect, inSelect;
 

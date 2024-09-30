@@ -50,6 +50,9 @@ void intDecode(u8 instruction, CPU* cpu){
         case 0xb0:
             cpu->control.reset = true;
             break;
+        case 0xe0:
+            cpu->control.present = true;
+            break;
         case 0xf0:
             cpu->control.screen = true;
             break;

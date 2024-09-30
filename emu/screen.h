@@ -21,6 +21,7 @@ typedef struct {
 } Screen;
 
 void initScreen(Screen* screen);
-void drawPixel(u8 xCoord, u8 yCoord, u8 color, ClockState cs);
+void drawPixel(u8* xCoord, u8* yCoord, u8* color, ClockState* cs, Screen* screen, bool instruction);
+void drawToScreen(Screen* screen, bool* command);
 
 #endif

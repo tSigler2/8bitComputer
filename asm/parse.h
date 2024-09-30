@@ -28,6 +28,7 @@ enum Op{
     LOADM = (u8)0x90,
     INPUT = (u8)0xa0,
     RESET = (u8)0xb0,
+    PRESENT = (u8)0xe0,
     SCREEN = (u8)0xf0
 };
 

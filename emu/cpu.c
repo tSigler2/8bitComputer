@@ -10,7 +10,10 @@ static inline void registerUpdate(CPU* cpu, u8 value){
 static inline void aluOperations(CPU* cpu){
     u8 result;
     
-    if(cpu->control.add) result = cpu->regs[cpu->control.reg1Sel].val + cpu->regs[cpu->control.reg2Sel].val;
+    if(cpu->control.add){
+        result = cpu->regs[cpu->control.reg1Sel].val + cpu->regs[cpu->control.reg2Sel].val;
+        if(cpu->control.flags[0]) cpu->regs[cpu->control.reg1Sel].val++;
+    }
     else if(cpu->control.andOp) result = cpu->regs[cpu->control.reg1Sel].val & cpu->regs[cpu->control.reg2Sel].val;
     else if(cpu->control.orOp) result = cpu->regs[cpu->control.reg1Sel].val | cpu->regs[cpu->control.reg2Sel].val;
     else if(cpu->control.notOp) result = ~(cpu->regs[cpu->control.reg1Sel].val);
@@ -59,4 +62,6 @@ void instructProcess(CPU* cpu, u8 instruction){
     immOperation(cpu, instruction);
     keyboardOperation(cpu);
     registerUpdate(cpu, cpu->control.valLines[cpu->control.inSelect]);
+    drawPixel(&(cpu->register[2].val), &(cpu->register[3].val), &(cpu->clock.cs), &(cpu->screen), cpu->control.screen);
+    drawToScreen(&(cpu->screen), cpu->control->present);
 }

@@ -64,6 +64,8 @@ u8 checkCommand(struct Token* token){
             return byte;
         case RESET:
             return byte;
+        case PRESENT:
+            return byte;
         case SCREEN:
             return byte;
         default:
