@@ -163,6 +163,12 @@ void generateBinary(struct Token* program, FILE* outFile){
         funcFind = findFuncAddress(funcAddresses, funcNote[i], program->childNum);
         low = funcTracker[2*funcFind];
         high = funcTracker[2*funcFind+1];
+
+        if(low == 0x00 && high != 0x00) high--;
+        else{
+            low--;
+        }
+
         fwrite(&low, sizeof(u8), 1, outFile);
         fseek(outFile, 1, SEEK_CUR);
         fwrite(&high, sizeof(u8), 1, outFile);

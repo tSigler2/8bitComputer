@@ -299,12 +299,10 @@
     <wire from="(260,400)" to="(360,400)"/>
     <wire from="(260,550)" to="(290,550)"/>
     <wire from="(280,560)" to="(280,630)"/>
-    <wire from="(280,560)" to="(290,560)"/>
     <wire from="(280,630)" to="(670,630)"/>
     <wire from="(280,700)" to="(280,1150)"/>
     <wire from="(290,510)" to="(290,530)"/>
     <wire from="(290,510)" to="(500,510)"/>
-    <wire from="(290,560)" to="(290,570)"/>
     <wire from="(290,590)" to="(290,670)"/>
     <wire from="(30,950)" to="(30,1040)"/>
     <wire from="(30,950)" to="(80,950)"/>
@@ -519,11 +517,6 @@
       <a name="width" val="2"/>
     </comp>
     <comp lib="0" loc="(390,220)" name="Splitter">
-      <a name="appear" val="right"/>
-      <a name="fanout" val="8"/>
-      <a name="incoming" val="8"/>
-    </comp>
-    <comp lib="0" loc="(390,220)" name="Splitter">
       <a name="bit0" val="1"/>
       <a name="bit2" val="1"/>
       <a name="bit3" val="1"/>
@@ -531,6 +524,11 @@
       <a name="bit5" val="1"/>
       <a name="bit6" val="1"/>
       <a name="bit7" val="0"/>
+      <a name="incoming" val="8"/>
+    </comp>
+    <comp lib="0" loc="(390,220)" name="Splitter">
+      <a name="appear" val="right"/>
+      <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
     </comp>
     <comp lib="0" loc="(460,220)" name="Pin">

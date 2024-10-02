@@ -4,14 +4,14 @@
 #include "cpu.h"
 #include <stdbool.h>
 
-#define CONTROL(_r, _c) (((_r) || ((_c) && !(_r))) ? false : true)
+#define CONTROL(_r) !(_r)
 
 static inline void controlRegOps(u8 lower, Control* control){
-    control->reg[lower].content = CONTROL(control->reg[lower].content, true);
+    control->reg[lower].actLine = CONTROL(control->reg[lower].actLine);
 }
 
 static inline void exitImmMode(CPU* cpu){
-    for(int i = 0; i < 6; i++) cpu->control.reg[i].content = CONTROL(cpu->control.reg[i].content, false);
+    for(int i = 0; i < 6; i++) cpu->control.reg[i].actLine = CONTROL(cpu->control.reg[i].actLine);
 }
 
 static inline void aluOps(u8 lower, Control* control){
@@ -57,6 +57,13 @@ static inline void resetALU(Control* control){
 }
 
 static inline void reset(CPU* cpu, u8 inst){
+    if(cpu->immMode > 0) return;
+
+    for(int i = 0; i < 6; i++){
+        cpu->regs[i].actLine = false;
+        cpu->control.reg[i].actLine = false;
+    }
+
     if(inst != 0x00) cpu->control.halt = false;
     if(inst != 0x10) cpu->control.jump = false;
     if(inst != 0x20) cpu->control.add = false;

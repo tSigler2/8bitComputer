@@ -1,10 +1,12 @@
 #include "cpu.h"
 
 static inline void registerUpdate(CPU* cpu, u8 value){
-    for(int i = 0; i < 6; i++){
-        if(cpu->regs[i].actLine && cpu->clock.cs == cpu->regs[i].update) cpu->regs[i].val = value;
+    if(cpu->immMode != 2){
+        for(int i = 0; i < 6; i++){
+            if(cpu->regs[i].actLine && cpu->clock.cs == cpu->regs[i].update) cpu->regs[i].val = value;
+        }
     }
-    if(cpu->immMode) cpu->immMode--;
+    if(cpu->immMode > 0 && cpu->clock.cs == FALLING) cpu->immMode--;
 }
 
 static inline void aluOperations(CPU* cpu){
@@ -22,15 +24,24 @@ static inline void aluOperations(CPU* cpu){
     }
 
     if(result == 0x00) cpu->control.flags[2] = true;
+    else{
+        cpu->control.flags[2] = false;
+    }
     if((result & 0x80)) cpu->control.flags[1] = true;
+    else{
+        cpu->control.flags[1] = false;
+    }
     if((result < cpu->regs[cpu->control.reg1Sel].val) || (result < cpu->regs[cpu->control.reg2Sel].val)) cpu->control.flags[0] = true;
+    else{
+        cpu->control.flags[0] = false;
+    }
     
     cpu->control.valLines[0] = result;
 }
 
 static inline void memOps(CPU* cpu){
-    if(cpu->ram.read) cpu->control.valLines[1] = cpu->ram.mem[((((u16)cpu->regs[5].val) << 8) + ((u16)cpu->regs[4].val))];
-    if(cpu->ram.write) cpu->ram.mem[((((u16)cpu->regs[5].val) << 8) + ((u16)cpu->regs[4].val))] = cpu->regs[cpu->control.regSelect].val;
+    if(cpu->ram.read) cpu->control.valLines[1] = cpu->ram.mem[((((u16)cpu->regs[4].val) << 8) + ((u16)cpu->regs[5].val))];
+    if(cpu->ram.write) cpu->ram.mem[((((u16)cpu->regs[4].val) << 8) + ((u16)cpu->regs[5].val))] = cpu->regs[cpu->control.regSelect].val;
 }
 
 static inline void immOperation(CPU* cpu, u8 val){

@@ -4,6 +4,7 @@ fnc _start:
     rst
     mov a, 0
     mov b, 1
+    mov c, 0
     add a, c, a
     mov c, 5
     jmp _fib

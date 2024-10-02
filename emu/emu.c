@@ -8,6 +8,7 @@ int main(int argc, char** argv){
         exit(1);
     }
     inFile = NULL;
+    verbose = false;
 
     inPerSec = 0;
 
@@ -16,6 +17,7 @@ int main(int argc, char** argv){
             inPerSec = atoi(argv[i+1]);
             i++;
         }
+        else if(!strcmp(argv[i], "-v")) verbose = true;
         else if(inFile == NULL){
             inFile = fopen(argv[i], "rb");
 
@@ -78,12 +80,12 @@ int main(int argc, char** argv){
             .inSelect = 0,
 
             .reg = {
-                [0] = {.name = 'a', .content = 0x00, .actLine = false, .update = FALLING},
-                [1] = {.name = 'b', .content = 0x00, .actLine = false, .update = FALLING},
-                [2] = {.name = 'c', .content = 0x00, .actLine = false, .update = FALLING},
-                [3] = {.name = 'd', .content = 0x00, .actLine = false, .update = FALLING},
-                [4] = {.name = 'l', .content = 0x00, .actLine = false, .update = FALLING},
-                [5] = {.name = 'h', .content = 0x00, .actLine = false, .update = FALLING}
+                [0] = {.name = 'a', .actLine = false, .update = FALLING},
+                [1] = {.name = 'b', .actLine = false, .update = FALLING},
+                [2] = {.name = 'c', .actLine = false, .update = FALLING},
+                [3] = {.name = 'd', .actLine = false, .update = FALLING},
+                [4] = {.name = 'l', .actLine = false, .update = FALLING},
+                [5] = {.name = 'h', .actLine = false, .update = FALLING}
             },
 
             .flags = {false},
@@ -104,12 +106,14 @@ int main(int argc, char** argv){
     struct timespec ts;
     while(!(cpu.control.halt)){
         clock_gettime(CLOCK_REALTIME, &ts);
-        fread(&instruction, sizeof(u8), 1, inFile);
+        if(cpu.clock.cs == FALLING) fread(&instruction, sizeof(u8), 1, inFile);
         intDecode(instruction, &cpu);
+        if(cpu.clock.cs == FALLING && verbose) printf("Instruction: %x File Position: %ld ImmMode: %d\n", instruction, ftell(inFile), cpu.immMode);
+        if(cpu.clock.cs == FALLING && verbose) printf("A: %x B: %x C: %x D: %x L: %x H: %x ZF: %d\n", cpu.regs[0].val, cpu.regs[1].val, cpu.regs[2].val, cpu.regs[3].val, cpu.regs[5].val, cpu.regs[4].val, cpu.control.flags[2]);
         instructProcess(&cpu, instruction);
         cpu.clock.cs = clockForward(cpu.clock.cs);
 
-        if(cpu.control.jump && cpu.control.flags[2]) fseek(inFile, (long)((((u16)cpu.regs[4].val) << 8) + ((u16) cpu.regs[5].val)), SEEK_SET);
+        if(cpu.control.jump && cpu.control.flags[2] && cpu.clock.cs == FALLING) fseek(inFile, (long)((((u16)cpu.regs[4].val) << 8) + ((u16) cpu.regs[5].val)), SEEK_SET);
         while(ts.tv_nsec % cpu.clock.speed != (long)0) clock_gettime(CLOCK_REALTIME, &ts);
     }
 

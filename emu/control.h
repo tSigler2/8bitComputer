@@ -6,7 +6,7 @@
 
 typedef struct ControlReg{
     char name;
-    bool content, actLine;
+    bool actLine;
 
     ClockState update;
 } ControlReg;
